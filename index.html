@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trilha Dev — Plano de estudos para programadores</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;700&display=swap">
+<style>
+:root{color-scheme:light;--bg:#f2f5fb;--sf:#ffffff;--tx:#10203a;--mu:#5a6781;--bd:#dbe2f0;--ac:#2f6bff;--acs:#e6eeff;--ok:#12a36b;--sun:#ffc93c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c1426;--sf:#142039;--tx:#e8eefb;--mu:#9aa8c7;--bd:#25345a;--ac:#6b95ff;--acs:#1b2c55;--ok:#34d399;--sun:#ffd25a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c1426;--sf:#142039;--tx:#e8eefb;--mu:#9aa8c7;--bd:#25345a;--ac:#6b95ff;--acs:#1b2c55;--ok:#34d399;--sun:#ffd25a}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.55 'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif}
+main{max-width:860px;margin:0 auto;padding:40px 20px 64px}
+h1,h2,h3{font-family:'Bricolage Grotesque','Figtree',system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-.02em;max-width:16ch}
+header p{color:var(--mu);max-width:58ch;margin:16px 0 0;font-size:1.05rem}
+.areas{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:32px 0 8px}
+.area{display:flex;gap:12px;align-items:flex-start;text-align:left;font:inherit;color:inherit;background:var(--sf);border:2px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer;transition:border-color .15s,background .15s}
+.area:hover{border-color:var(--ac)}
+.area[aria-pressed="true"]{border-color:var(--ac);background:var(--acs)}
+.area .em{font-size:1.7rem;line-height:1}
+.area b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:1.1rem}
+.area span.d{display:block;color:var(--mu);font-size:.88rem;line-height:1.35;margin-top:2px}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+#plan{margin-top:40px}
+.top{display:flex;flex-wrap:wrap;gap:20px 32px;justify-content:space-between;align-items:flex-end}
+.top h2{font-size:clamp(1.6rem,4.5vw,2.3rem);font-weight:800}
+.top p{margin:8px 0 0;color:var(--mu);max-width:50ch}
+.prog{min-width:200px;flex:1 1 200px;max-width:280px}
+.prog strong{font:800 2.4rem/1 'Bricolage Grotesque',sans-serif}
+.bar{height:10px;background:var(--bd);border-radius:99px;overflow:hidden;margin:8px 0 4px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .35s}
+.prog small{color:var(--mu)}
+.meta{display:grid;gap:14px;margin:24px 0 8px;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.meta h3{font-size:.95rem;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--acs);color:var(--ac);font-weight:700;font-size:.88rem;padding:4px 12px;border-radius:99px}
+.meta p{margin:0;color:var(--mu);font-size:.95rem}
+.trail{position:relative;margin-top:28px;padding-left:52px}
+.line{position:absolute;left:19px;top:20px;bottom:20px;width:4px;background:var(--bd);border-radius:4px}
+.line i{display:block;width:100%;height:0;background:var(--sun);border-radius:4px;transition:height .45s}
+.st{position:relative;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:18px 18px 12px;margin-bottom:16px}
+.node{position:absolute;left:-52px;top:14px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--sf);border:3px solid var(--bd);font:800 1.05rem 'Bricolage Grotesque',sans-serif;transition:background .2s,border-color .2s}
+.st[data-done="1"] .node{background:var(--ok);border-color:var(--ok);color:#fff}
+.st[data-done="1"]{border-color:var(--ok)}
+.st h3{font-size:1.25rem}
+.st .t{color:var(--mu);font-size:.9rem;margin:2px 0 10px}
+.st ul{list-style:none;margin:0;padding:0}
+.st li+li{border-top:1px solid var(--bd)}
+.st label{display:flex;gap:12px;align-items:flex-start;padding:10px 0;cursor:pointer}
+.st input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--ok);flex:none}
+.st input:checked+span{color:var(--mu);text-decoration:line-through}
+.rs{font:inherit;font-weight:700;color:var(--mu);background:none;border:1px solid var(--bd);border-radius:10px;padding:10px 16px;cursor:pointer;margin-top:8px}
+.rs:hover{color:var(--tx);border-color:var(--mu)}
+.win{display:none;background:var(--sun);color:#10203a;border-radius:14px;padding:20px;margin-top:8px}
+.win h2{font-size:1.4rem;font-weight:800}
+.win p{margin:6px 0 12px}
+.win ol{margin:0;padding-left:22px;display:grid;gap:8px}
+.win.on{display:block}
+.sal{margin-top:16px;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.sal h3{font-size:1.05rem;margin-bottom:12px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.sg div{background:var(--acs);border-radius:10px;padding:12px}
+.sg small{display:block;color:var(--mu);font-size:.85rem}
+.sg b{display:block;font:800 1.15rem/1.25 'Bricolage Grotesque',sans-serif;margin-top:2px}
+.sal p{margin:12px 0 0;color:var(--mu);font-size:.88rem}
+.rec{margin:36px 0 20px}
+.rec h2{font-size:1.5rem;font-weight:800}
+.rec>p{color:var(--mu);margin:6px 0 16px;max-width:58ch}
+.rg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.rc{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.rc h3{font-size:1.05rem;margin-bottom:10px}
+.rc ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.rc a{color:var(--ac);font-weight:700;text-decoration:none}
+.rc a:hover{text-decoration:underline}
+.rc li span{display:block;color:var(--mu);font-size:.88rem;line-height:1.4}
+@media (max-width:520px){main{padding:28px 16px 48px}.trail{padding-left:46px}.node{left:-46px;width:38px;height:38px}.line{left:17px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Qual área de programação é o seu sonho?</h1>
+  <p>Escolha uma área e veja o caminho: linguagens, ferramentas e projetos que você precisa dominar para trabalhar com isso. Marque o que já aprendeu e acompanhe seu progresso.</p>
+</header>
+
+<section class="areas" id="areas" aria-label="Áreas de programação"></section>
+
+<section id="plan" hidden>
+  <div class="top">
+    <div><h2 id="pn"></h2><p id="pd"></p></div>
+    <div class="prog" aria-live="polite"><strong id="pp">0%</strong><div class="bar"><i id="pb"></i></div><small id="pc"></small></div>
+  </div>
+  <div class="meta">
+    <div><h3>Linguagens e tecnologias principais</h3><div class="chips" id="pl"></div></div>
+    <p id="pj"></p>
+  </div>
+  <div class="sal" id="sal"></div>
+  <div class="trail" id="tr"><div class="line"><i id="lf"></i></div></div>
+  <section class="win" id="win" aria-live="polite"></section>
+  <section class="rec" id="rec" aria-label="Estude de graça"></section>
+  <button class="rs" id="rs" type="button">Zerar o progresso desta área</button>
+</section>
+</main>
+
+<script>
+const AREAS = {
+  front: { nome:"Front-end", em:"🎨", curto:"Sites e aplicações que as pessoas veem e usam no navegador.",
+    desc:"Você vai construir a parte visual e interativa de sites e sistemas: o que o usuário vê, clica e sente.",
+    langs:["HTML","CSS","JavaScript","TypeScript","React","Git"], tempo:"8 a 12 meses",
+    cargos:"Desenvolvedor(a) Front-end, Web Developer, UI Developer",
+    etapas:[
+      {n:"Base da web", t:"1 a 2 meses", i:["Lógica de programação e como a internet funciona","HTML5 semântico e acessibilidade","CSS3, Flexbox, Grid e design responsivo","Git e GitHub"]},
+      {n:"JavaScript", t:"2 a 3 meses", i:["JavaScript moderno (ES6+): funções, arrays e objetos","DOM, eventos e formulários","Consumir APIs com fetch e async/await","Mini projetos: lista de tarefas, calculadora, clima"]},
+      {n:"Frameworks e ferramentas", t:"3 a 4 meses", i:["React: componentes, estado e hooks","TypeScript","Tailwind CSS ou um sistema de design","Next.js e rotas"]},
+      {n:"Nível profissional", t:"2 meses", i:["Testes (Jest e Testing Library)","Performance e SEO","Portfólio com 3 projetos publicados","Inglês técnico e entrevistas"]}
+    ]},
+  back: { nome:"Back-end", em:"⚙️", curto:"Servidores, bancos de dados e APIs que fazem tudo funcionar por trás.",
+    desc:"Você vai criar a lógica, as regras de negócio e os dados que ficam por trás de aplicativos e sites.",
+    langs:["Python","Java","Node.js","SQL","Docker","Git"], tempo:"9 a 14 meses",
+    cargos:"Desenvolvedor(a) Back-end, Engenheiro(a) de Software, Desenvolvedor(a) de APIs",
+    etapas:[
+      {n:"Fundamentos", t:"2 meses", i:["Lógica de programação e algoritmos","Terminal Linux e Git","Como funcionam HTTP, requisições e respostas"]},
+      {n:"Uma linguagem a fundo", t:"3 meses", i:["Escolha uma: Python, Java, C# ou Node.js","Programação orientada a objetos","Estruturas de dados (listas, pilhas, árvores)","Tratamento de erros e organização de código"]},
+      {n:"Dados e APIs", t:"3 a 4 meses", i:["SQL e banco relacional (PostgreSQL)","Criar APIs REST","Autenticação e segurança básica (JWT)","Um banco NoSQL (MongoDB ou Redis)"]},
+      {n:"Nível profissional", t:"2 a 3 meses", i:["Testes automatizados","Docker","Deploy na nuvem (AWS, Azure ou GCP)","Arquitetura e boas práticas (Clean Code, SOLID)"]}
+    ]},
+  mobile: { nome:"Mobile", em:"📱", curto:"Aplicativos para Android e iPhone.",
+    desc:"Você vai criar apps que as pessoas instalam no celular, com telas, notificações e acesso à câmera e ao GPS.",
+    langs:["Kotlin","Swift","Dart / Flutter","React Native","Git"], tempo:"8 a 12 meses",
+    cargos:"Desenvolvedor(a) Mobile, Desenvolvedor(a) Android, Desenvolvedor(a) iOS",
+    etapas:[
+      {n:"Fundamentos", t:"2 meses", i:["Lógica de programação e orientação a objetos","Git e GitHub","Noções de UX e design de interfaces"]},
+      {n:"Escolha seu caminho", t:"3 meses", i:["Android nativo: Kotlin","iOS nativo: Swift","Multiplataforma: Flutter (Dart) ou React Native (JavaScript)"]},
+      {n:"Construir apps", t:"3 meses", i:["Navegação entre telas e gerenciamento de estado","Consumir APIs e salvar dados no aparelho","Câmera, GPS e notificações push","Firebase para login e banco de dados"]},
+      {n:"Nível profissional", t:"2 meses", i:["Testes e depuração","Publicar na Play Store ou App Store","CI/CD para apps","Portfólio com 2 apps publicados"]}
+    ]},
+  dados: { nome:"Dados e IA", em:"🧠", curto:"Análise de dados, aprendizado de máquina e inteligência artificial.",
+    desc:"Você vai transformar dados em decisões e criar modelos que aprendem, preveem e geram conteúdo.",
+    langs:["Python","SQL","Pandas","Scikit-learn","PyTorch","Jupyter"], tempo:"10 a 16 meses",
+    cargos:"Analista de Dados, Cientista de Dados, Engenheiro(a) de Machine Learning",
+    etapas:[
+      {n:"Base", t:"2 a 3 meses", i:["Python do zero","Matemática e estatística básica","Jupyter Notebook e Git"]},
+      {n:"Trabalhar com dados", t:"3 meses", i:["SQL para consultas e análises","Pandas e NumPy","Visualização com Matplotlib e Power BI","Limpeza e preparação de dados"]},
+      {n:"Machine learning", t:"3 a 5 meses", i:["Scikit-learn: regressão, classificação e clusterização","Avaliação e ajuste de modelos","Deep learning com PyTorch ou TensorFlow"]},
+      {n:"Nível profissional", t:"2 a 3 meses", i:["Uso de LLMs e APIs de IA","MLOps: colocar modelos em produção","Projetos no Kaggle e no GitHub"]}
+    ]},
+  devops: { nome:"DevOps e Nuvem", em:"☁️", curto:"Infraestrutura, automação e servidores na nuvem.",
+    desc:"Você vai cuidar de como o software é publicado, monitorado e mantido no ar com segurança.",
+    langs:["Linux","Bash","Python","Docker","Kubernetes","Terraform"], tempo:"10 a 15 meses",
+    cargos:"DevOps Engineer, SRE, Engenheiro(a) de Nuvem",
+    etapas:[
+      {n:"Base", t:"2 a 3 meses", i:["Linux e shell script","Redes: TCP/IP, DNS e HTTP","Git e uma linguagem de script (Python ou Bash)"]},
+      {n:"Contêineres e automação", t:"3 meses", i:["Docker","CI/CD com GitHub Actions","Kubernetes"]},
+      {n:"Nuvem", t:"3 a 4 meses", i:["Um provedor a fundo: AWS, Azure ou GCP","Infraestrutura como código com Terraform","Segurança e controle de acesso"]},
+      {n:"Nível profissional", t:"2 a 3 meses", i:["Monitoramento com Prometheus e Grafana","Custos e escalabilidade","Certificação (AWS Cloud Practitioner, por exemplo)"]}
+    ]},
+  games: { nome:"Jogos", em:"🎮", curto:"Criação de jogos 2D, 3D e experiências interativas.",
+    desc:"Você vai dar vida a mundos, personagens e regras usando motores de jogo e muita criatividade.",
+    langs:["C#","Unity","C++","Unreal","GDScript","Godot"], tempo:"10 a 14 meses",
+    cargos:"Desenvolvedor(a) de Jogos, Gameplay Programmer, Engine Programmer",
+    etapas:[
+      {n:"Fundamentos", t:"2 meses", i:["Lógica de programação e orientação a objetos","Matemática para jogos: vetores e coordenadas","Git e GitHub"]},
+      {n:"Escolha seu motor", t:"3 meses", i:["Unity com C# (ótimo para começar)","Unreal Engine com C++ (jogos de alto nível)","Godot com GDScript (leve e gratuito)"]},
+      {n:"Fazer jogos", t:"3 a 4 meses", i:["Física, colisões e animações","Um jogo 2D completo","Um protótipo 3D","Participar de uma game jam"]},
+      {n:"Nível profissional", t:"2 a 3 meses", i:["Otimização de desempenho","Publicar no itch.io ou na Steam","Portfólio com 3 jogos jogáveis"]}
+    ]}
+};
+
+const yt = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+const ch = (n, d, q) => [n, yt(q || n), d];
+const REC = {
+  front: {
+    cursos: [["freeCodeCamp","https://www.freecodecamp.org/","Currículo completo de web com projetos e certificados gratuitos."],["The Odin Project","https://www.theodinproject.com/","Caminho full-stack gratuito, em inglês, focado em projetos."],["DIO","https://www.dio.me/","Bootcamps e trilhas gratuitas em português."]],
+    sites: [["MDN Web Docs","https://developer.mozilla.org/pt-BR/","A referência oficial de HTML, CSS e JavaScript."],["Frontend Mentor","https://www.frontendmentor.io/","Desafios de layout para praticar com projetos reais."],["roadmap.sh/frontend","https://roadmap.sh/frontend","Mapa visual do que estudar em cada fase."]],
+    canais: [ch("Curso em Vídeo","HTML, CSS, JavaScript e Git do zero, em português."),ch("Rocketseat","React, TypeScript e carreira em tecnologia."),ch("Código Fonte TV","Programação e carreira em vídeos diretos, em português.")]
+  },
+  back: {
+    cursos: [["CS50 de Harvard","https://cs50.harvard.edu/x/","Introdução à computação, em inglês com legendas."],["freeCodeCamp","https://www.freecodecamp.org/","Trilhas de APIs, bancos de dados e Python com projetos."],["DIO","https://www.dio.me/","Bootcamps e trilhas gratuitas em português."]],
+    sites: [["roadmap.sh/backend","https://roadmap.sh/backend","Mapa visual do que estudar em back-end."],["SQLBolt","https://sqlbolt.com/","Aprenda SQL com exercícios interativos."],["Exercism","https://exercism.org/","Exercícios com feedback em várias linguagens."]],
+    canais: [ch("Curso em Vídeo","Python, PHP e MySQL do zero, em português."),ch("Akitando","Carreira, arquitetura e boas práticas, em português."),ch("Rocketseat","Node.js, APIs e carreira em tecnologia.")]
+  },
+  mobile: {
+    cursos: [["Android Basics com Compose","https://developer.android.com/courses","Curso oficial do Google para criar apps Android com Kotlin."],["Develop in Swift","https://developer.apple.com/tutorials/develop-in-swift/","Tutoriais oficiais da Apple para apps de iPhone."],["Flutter","https://docs.flutter.dev/","Documentação e tutoriais oficiais do Flutter."]],
+    sites: [["React Native","https://reactnative.dev/","Documentação oficial para criar apps com JavaScript."],["Firebase","https://firebase.google.com/docs","Login, banco de dados e notificações para seus apps."],["roadmap.sh/android","https://roadmap.sh/android","Mapa visual do que estudar em Android."]],
+    canais: [ch("Flutterando","Flutter e Dart em português."),ch("Rocketseat","React Native e carreira em tecnologia."),ch("Hora de Codar","Vários cursos de programação gratuitos, em português.")]
+  },
+  dados: {
+    cursos: [["Kaggle Learn","https://www.kaggle.com/learn","Microcursos de Python, Pandas, SQL e machine learning."],["CS50 Python","https://cs50.harvard.edu/python/","Python da Harvard, em inglês com legendas."],["Hugging Face Learn","https://huggingface.co/learn","Cursos gratuitos de IA e LLMs, em inglês."]],
+    sites: [["Kaggle","https://www.kaggle.com/","Bases de dados e competições para praticar."],["scikit-learn","https://scikit-learn.org/stable/","Documentação e tutoriais de machine learning."],["SQLBolt","https://sqlbolt.com/","Aprenda SQL com exercícios interativos."]],
+    canais: [ch("Curso em Vídeo","Python do zero, em português."),ch("Programação Dinâmica","Python, dados e machine learning, em português."),ch("3Blue1Brown","Matemática e redes neurais com animações, em inglês.")]
+  },
+  devops: {
+    cursos: [["AWS Skill Builder","https://skillbuilder.aws/","Cursos digitais gratuitos de nuvem da AWS."],["Microsoft Learn","https://learn.microsoft.com/pt-br/training/","Trilhas gratuitas de Azure e DevOps."],["Docker: Get Started","https://docs.docker.com/get-started/","Tutorial oficial para aprender contêineres."]],
+    sites: [["roadmap.sh/devops","https://roadmap.sh/devops","Mapa visual do que estudar em DevOps."],["Linux Journey","https://linuxjourney.com/","Aprenda Linux passo a passo, em inglês."],["Kubernetes Tutorials","https://kubernetes.io/docs/tutorials/","Tutoriais oficiais do Kubernetes."]],
+    canais: [ch("LinuxTips","Linux, Docker, Kubernetes e DevOps, em português."),ch("Fabricio Veronez","DevOps, Docker e nuvem, em português."),ch("TechWorld with Nana","Kubernetes, Docker e CI/CD explicados, em inglês.")]
+  },
+  games: {
+    cursos: [["Unity Learn","https://learn.unity.com/","Trilhas oficiais e gratuitas para começar no Unity."],["CS50 Games","https://cs50.harvard.edu/games/","Curso de Harvard que recria jogos clássicos, em inglês."],["Godot Docs","https://docs.godotengine.org/","Documentação e tutorial do seu primeiro jogo 2D."]],
+    sites: [["itch.io","https://itch.io/","Jogue jogos indie e participe de game jams."],["Game Programming Patterns","https://gameprogrammingpatterns.com/","Livro online gratuito sobre arquitetura de jogos, em inglês."],["Epic Developer Community","https://dev.epicgames.com/community/learning","Cursos gratuitos de Unreal Engine."]],
+    canais: [ch("Brackeys","Unity e criação de jogos para iniciantes, em inglês."),ch("Code Monkey","Unity e C# na prática, em inglês."),ch("GDQuest","Godot e GDScript, em inglês.")]
+  }
+};
+const li = x => `<li><a href="${x[1]}" target="_blank" rel="noopener noreferrer">${x[0]}</a><span>${x[2]}</span></li>`;
+function renderRec() {
+  const r = REC[cur];
+  $('rec').innerHTML = !r ? '' : `<h2>Estude de graça</h2><p>Cursos, sites e canais gratuitos para essa área. Os sites abrem a página oficial e os canais abrem a busca no YouTube. Alguns cursos cobram só o certificado.</p><div class="rg"><div class="rc"><h3>Cursos gratuitos</h3><ul>${r.cursos.map(li).join('')}</ul></div><div class="rc"><h3>Sites para estudar e praticar</h3><ul>${r.sites.map(li).join('')}</ul></div><div class="rc"><h3>Canais no YouTube</h3><ul>${r.canais.map(li).join('')}</ul></div></div>`;
+}
+const SAL = {
+  front: {j:"R$ 3.000 a R$ 7.000", p:"R$ 7.000 a R$ 15.000", s:"R$ 13.000 a R$ 20.000"},
+  back: {j:"R$ 3.000 a R$ 7.000", p:"R$ 8.000 a R$ 15.000", s:"R$ 13.000 a R$ 21.000"},
+  mobile: {j:"R$ 3.000 a R$ 7.000", p:"R$ 8.000 a R$ 15.000", s:"R$ 13.000 a R$ 22.000"},
+  dados: {j:"R$ 5.000 a R$ 9.000", p:"R$ 9.000 a R$ 16.000", s:"R$ 16.000 a R$ 28.000", x:"Valores para cientista de dados. Analista de dados júnior costuma começar entre R$ 4.000 e R$ 7.000."},
+  devops: {j:"R$ 4.500 a R$ 8.000", p:"R$ 8.000 a R$ 14.000", s:"R$ 14.000 a R$ 23.000"},
+  games: null
+};
+function renderSal() {
+  const s = SAL[cur];
+  if (!s) { $('sal').innerHTML = `<h3>Quanto essa carreira paga</h3><p style="margin:0">Não encontrei dados confiáveis de salário de jogos no Brasil. Os valores variam muito entre estúdios e projetos. O que você aprende em C# também vale para outras áreas, como back-end com .NET.</p>`; return; }
+  $('sal').innerHTML = `<h3>Quanto essa carreira paga</h3><div class="sg"><div><small>Júnior</small><b>${s.j}</b></div><div><small>Pleno</small><b>${s.p}</b></div><div><small>Sênior</small><b>${s.s}</b></div></div><p>${s.x ? s.x + ' ' : ''}Faixas aproximadas de salário mensal em CLT no Brasil em 2026, segundo guias salariais como Robert Half e Jobrise. Variam com cidade, empresa, inglês e tipo de contrato, e São Paulo costuma pagar mais. Em 2026 entrar como júnior está mais concorrido, então projetos e portfólio fazem diferença.</p>`;
+}
+const PROJ = {
+  front: "Publique online pelo menos 3 projetos: uma landing page, um app de tarefas com JavaScript ou React e um clone de um site conhecido (Vercel, Netlify ou GitHub Pages).",
+  back: "Crie uma API REST completa com login, banco de dados e documentação, rodando na nuvem, e deixe o código no GitHub.",
+  mobile: "Termine 2 apps completos, com login e consumo de API, e publique (ou deixe prontos para publicar) na Play Store ou na App Store.",
+  dados: "Publique 3 análises no GitHub ou no Kaggle, incluindo um projeto de ponta a ponta com modelo de machine learning e dashboard.",
+  devops: "Monte um pipeline CI/CD completo com Docker e Terraform que sobe uma aplicação na nuvem, e documente cada etapa no GitHub.",
+  games: "Publique 3 jogos jogáveis no itch.io, sendo um deles feito em uma game jam."
+};
+function renderWin() {
+  const a = AREAS[cur];
+  if (!a) return;
+  const steps = [
+    ["Monte seu portfólio", PROJ[cur]],
+    ["Organize o GitHub e o LinkedIn", "Coloque um README claro em cada projeto e liste no perfil as tecnologias que você domina."],
+    ["Faça um currículo de uma página", "Destaque seus projetos e as tecnologias usadas. Se puder, tenha também uma versão em inglês."],
+    ["Candidate-se toda semana", "Procure vagas e estágios de nível júnior. Você não precisa dominar tudo o que a vaga lista."],
+    ["Treine para entrevistas", "Pratique lógica de programação e explicar seus projetos em voz alta, como se estivesse falando com o recrutador."],
+    ["Ganhe experiência extra", "Faça freelas, contribua com projetos open source e participe de comunidades e hackathons."],
+    ["Continue estudando", "Melhore seu inglês técnico e escolha uma segunda tecnologia para se aprofundar."]
+  ];
+  $('win').innerHTML = `<h2>🎉 Trilha completa! E agora?</h2><p>Você concluiu todos os tópicos de ${a.nome}. Agora é hora de transformar o que aprendeu em oportunidade:</p><ol>${steps.map(s => `<li><b>${s[0]}.</b> ${s[1]}</li>`).join('')}</ol>`;
+}
+const $ = id => document.getElementById(id);
+let cur = null, done = {};
+try { cur = localStorage.getItem('trilha_area') || null; done = JSON.parse(localStorage.getItem('trilha_done') || '{}'); } catch (e) {}
+if (cur && !AREAS[cur]) cur = null;
+function save() { try { localStorage.setItem('trilha_area', cur || ''); localStorage.setItem('trilha_done', JSON.stringify(done)); } catch (e) {} }
+
+function renderAreas() {
+  $('areas').innerHTML = Object.entries(AREAS).map(([k, a]) =>
+    `<button class="area" type="button" data-k="${k}" aria-pressed="${k === cur}"><span class="em" aria-hidden="true">${a.em}</span><span><b>${a.nome}</b><span class="d">${a.curto}</span></span></button>`
+  ).join('');
+}
+
+function renderPlan() {
+  const a = AREAS[cur];
+  $('plan').hidden = !a;
+  if (!a) return;
+  $('pn').textContent = a.nome;
+  $('pd').textContent = a.desc;
+  $('pl').innerHTML = a.langs.map(l => `<span class="chip">${l}</span>`).join('');
+  renderRec();
+  renderSal();
+  renderWin();
+  $('pj').textContent = `Tempo estimado: ${a.tempo}. Você pode trabalhar como: ${a.cargos}.`;
+  const tr = $('tr');
+  tr.querySelectorAll('.st').forEach(n => n.remove());
+  a.etapas.forEach((e, si) => {
+    const el = document.createElement('article');
+    el.className = 'st';
+    el.dataset.s = si;
+    el.innerHTML = `<span class="node">${si + 1}</span><h3>${e.n}</h3><p class="t">${e.t}</p><ul>` +
+      e.i.map((txt, ii) => `<li><label><input type="checkbox" data-k="${cur}:${si}:${ii}" ${done[`${cur}:${si}:${ii}`] ? 'checked' : ''}><span>${txt}</span></label></li>`).join('') + `</ul>`;
+    tr.appendChild(el);
+  });
+  update();
+}
+
+function update() {
+  const a = AREAS[cur];
+  if (!a) return;
+  let total = 0, ok = 0;
+  a.etapas.forEach((e, si) => {
+    let all = true;
+    e.i.forEach((_, ii) => { total++; if (done[`${cur}:${si}:${ii}`]) ok++; else all = false; });
+    const el = $('tr').querySelector(`.st[data-s="${si}"]`);
+    if (el) el.dataset.done = all ? '1' : '0';
+  });
+  const pct = Math.round(ok / total * 100);
+  $('pp').textContent = pct + '%';
+  $('pb').style.width = pct + '%';
+  $('lf').style.height = pct + '%';
+  $('pc').textContent = `${ok} de ${total} tópicos concluídos`;
+  $('win').classList.toggle('on', pct === 100);
+}
+
+$('areas').addEventListener('click', ev => {
+  const b = ev.target.closest('.area');
+  if (!b) return;
+  cur = b.dataset.k;
+  save(); renderAreas(); renderPlan();
+  $('plan').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+});
+
+$('tr').addEventListener('change', ev => {
+  const c = ev.target;
+  if (c.type !== 'checkbox') return;
+  if (c.checked) done[c.dataset.k] = 1; else delete done[c.dataset.k];
+  save(); update();
+});
+
+$('rs').addEventListener('click', () => {
+  Object.keys(done).forEach(k => { if (k.startsWith(cur + ':')) delete done[k]; });
+  save(); renderPlan();
+});
+
+renderAreas();
+renderPlan();
+</script>
+</body>
+</html>
